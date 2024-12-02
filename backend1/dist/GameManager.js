@@ -35,7 +35,8 @@ class GameManager {
             if (message.type === messages_1.MOVE) {
                 const game = this.games.find(game => game.player1 === ws || game.player2 === ws);
                 if (game) {
-                    game.makeMove(ws, message.move);
+                    console.log(message.move);
+                    game.makeMove(ws, message.payload.move);
                 }
             }
         });

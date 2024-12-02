@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Button } from "../components/Button";
 import { Chessboard } from "../components/Chessboard"
 import { UseSocket } from "../hooks/UseSocket"
 import { Chess } from "chess.js";
@@ -27,7 +26,6 @@ export const Game = () => {
             switch(message.type)
             {
                 case INIT_GAME:
-                    setChess(new Chess());
                     setBoard(chess.board());
                     console.log("Game initialized");
                     break;
@@ -36,7 +34,7 @@ export const Game = () => {
                     break;
                 case MOVE:
                     const move = message.payload;
-                    chess.move({from: move.from, to: move.to});
+                    chess.move(move);
                     setBoard(chess.board());
                     console.log("Player moved");
                     break;
@@ -57,19 +55,22 @@ export const Game = () => {
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 
                     <div className="grid-cols-span-4 bg-black-300">
-                        <Chessboard board={() => board}/>
+                        <Chessboard chess={chess} setBoard={setBoard} board={() => board} socket={socket} />
                     </div>
-                        <Button onClick={()=>
-                            {
-                                socket.send(JSON.stringify(
-                                    {
-                                        type:INIT_GAME
-                                    }
-                                ))
-                            }
-                        }>
+                    <div className="flex justify-center items-center">
+                    <button
+                        onClick={() => {
+                            socket.send(
+                                JSON.stringify({
+                                    type: INIT_GAME,
+                                })
+                            );
+                        }}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded text-lg"
+                    >
                         Play
-                        </Button>
+                    </button>
+                </div>
                 </div>
  
             </div>
