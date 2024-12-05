@@ -31,24 +31,6 @@ export const Chessboard = ({ chess,setBoard,board, socket }:
     const [from, setFrom] = useState<null | Square>(null);
     const [to, setTo] = useState<null | Square>(null);
 
-    // const handleSquareClick = (square: Square) => {
-    //     console.log(square);
-    //     if (from === null) {
-    //         setFrom(square);
-    //     } else {
-    //         setTo(square);
-    //         socket.send(JSON.stringify({
-    //             type: MOVE,
-    //             payload: {
-    //                 from: from,
-    //                 to: square
-    //             }
-    //         }));
-    //         setFrom(null);
-    //         setTo(null);
-    //     }
-    // };
-
     return (
         <div className="grid grid-cols-8 gap-0.5">
             {board().map((row, i) => (
